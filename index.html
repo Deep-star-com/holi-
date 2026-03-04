@@ -1,123 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Holi Cyber Attack</title>
+<title>Holi Gift 🎁</title>
 <style>
 body {
     margin: 0;
-    background: black;
-    color: #00ff00;
-    font-family: monospace;
-    overflow: hidden;
+    background: linear-gradient(to right, #ff512f, #dd2476);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
 }
-#terminal {
-    padding: 40px;
-    font-size: 20px;
-    white-space: pre-line;
+
+#container {
+    max-width: 500px;
 }
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: #dd2476;
+    font-weight: bold;
+}
+
 .hidden {
     display: none;
-}
-#holi {
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    text-align: center;
-    font-size: 40px;
-    font-family: Arial, sans-serif;
-    color: white;
 }
 </style>
 </head>
 <body>
 
-<!-- Hacker typing sound -->
-<audio id="typingSound" loop>
-    <source src="https://www.soundjay.com/mechanical/keyboard-1.mp3" type="audio/mpeg">
-</audio>
-
-<div id="terminal"></div>
-
-<div id="holi" class="hidden">
-    🎨 YOU ARE UNDER ATTACK! 🎨 <br><br>
-    Relax... It's Holi 😎 <br><br>
-    🌈 Wishing You a Very Happy Holi! 🌈
+<div id="container">
+    <h1>🎁 You Received a Holi Gift!</h1>
+    <p>Click below to open your surprise 👇</p>
+    <button onclick="startPrank()">Open Gift</button>
 </div>
 
+<audio id="beepSound" loop>
+    <source src="https://www.soundjay.com/buttons/beep-07.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-let text = [
-"Initializing Holi Attack Protocol...",
-"Bypassing Security...",
-"Injecting Colors...",
-"Target Locked 🎯",
-"",
-"Countdown Begins..."
-];
+let sound = document.getElementById("beepSound");
 
-let i = 0;
-let terminal = document.getElementById("terminal");
-let sound = document.getElementById("typingSound");
+function startPrank() {
 
-function typeLine() {
-    if (i === 0) {
-        sound.play(); // start typing sound
+    document.getElementById("container").innerHTML =
+    "<h2>⚠ System Alert ⚠</h2><p>Unknown activity detected...</p>";
+
+    sound.play().catch(()=>{});
+
+    // Vibrate for 5 seconds (if supported)
+    if (navigator.vibrate) {
+        navigator.vibrate([500, 200, 500, 200, 500, 200, 500]);
     }
 
-    if (i < text.length) {
-        terminal.innerHTML += text[i] + "\n";
-        i++;
-        setTimeout(typeLine, 1000);
-    } else {
-        startCountdown();
-    }
+    setTimeout(() => {
+        sound.pause();
+        showMessage();
+    }, 5000);
 }
 
-function startCountdown() {
-    let count = 5;
-    let interval = setInterval(() => {
-
-        terminal.innerHTML += "Attack in " + count + "...\n";
-
-        // Mobile vibration effect
-        if (navigator.vibrate) {
-            navigator.vibrate(300);
-        }
-
-        count--;
-        if (count < 0) {
-            clearInterval(interval);
-            launchHoli();
-        }
-    }, 1000);
-}
-
-function launchHoli() {
-    sound.pause(); // stop typing sound
-
+function showMessage() {
     document.body.style.background =
     "linear-gradient(to right, #ff0080, #ff8c00, #40e0d0, #ff1493)";
 
-    terminal.classList.add("hidden");
-    document.getElementById("holi").classList.remove("hidden");
-
-    confetti();
+    document.getElementById("container").innerHTML =
+    "<h1>😎 Relax!</h1><h2>It's a Holi Prank! 🎨</h2><p>Wishing You a Very Happy Holi! 🌈</p>";
 }
-
-function confetti() {
-    for (let i = 0; i < 200; i++) {
-        let div = document.createElement("div");
-        div.style.position = "absolute";
-        div.style.width = "10px";
-        div.style.height = "10px";
-        div.style.background =
-        `hsl(${Math.random()*360}, 100%, 50%)`;
-        div.style.top = Math.random() * window.innerHeight + "px";
-        div.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(div);
-    }
-}
-
-typeLine();
 </script>
 
 </body>
